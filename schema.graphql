@@ -1,0 +1,64 @@
+type Friend {
+  id: ID
+  username: String
+  friendusername: String
+  transactions: [Transaction]
+}
+
+type Mutation {
+  createUser(username: String, email: String, ssn: String, password: String, fname: String, lname: String): User
+  login(username: String, password: String): User
+  addFriend(username: String, friendusername: String): Friend
+  addWallet(type: String, bankname: String, routingnumber: String, accountnumber: String, zipcode: String, creditcard: String, cvv: String, expmonth: String, expyear: String, amount: Float, username: String): Wallet
+  addTransaction(f_username: String, t_username: String, amount: Float, date: String, reason: String): Transaction
+  deleteFriend(username: String, friendusername: String): String
+}
+
+type Query {
+  getUser(username: String): User
+  getUsers: [User]
+  getUserById(_id: String): User
+  getAllTransaction: [Transaction]
+  getTransaction(username: String): [Transaction]
+  getWallet(username: String): Wallet
+}
+
+type Transaction {
+  id: ID
+  f_username: String
+  t_username: String
+  amount: Float
+  date: String
+  reason: String
+}
+
+type User {
+  id: ID
+  username: String
+  email: String
+  ssn: String
+  fname: String
+  lname: String
+  password: String
+  wallet: Wallet
+  walletId: String
+  transactions: [Transaction]
+  friends: [Friend]
+  token: String
+}
+
+type Wallet {
+  id: ID
+  bankname: String
+  routingnumber: String
+  accountnumber: String
+  zipcode: String
+  creditcard: String
+  cvv: String
+  expmonth: String
+  expyear: String
+  amount: Float
+  type: String
+  username: String
+}
+

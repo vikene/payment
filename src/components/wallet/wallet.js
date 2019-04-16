@@ -1,13 +1,14 @@
 import React from "react";
 import "./wallet.css";
+import {createFragmentContainer, graphql} from "react-relay";
 
-export default class Wallet extends React.Component{
+class Wallet extends React.Component{
     render(){
         return (
             <div className="container-fluid">
                 <div className="row">
                     <div style={{"margin": "0 auto","textAlign": "center", "fontSize": "50px", "color": "#00c730"}}>
-                        $0.00
+                        ${parseFloat(this.props.wallet.amount).toFixed(2)}
                     </div>
                 </div>
                 <div className="row">
@@ -76,3 +77,20 @@ export default class Wallet extends React.Component{
         document.body.appendChild(script);
     }
 }
+
+export default createFragmentContainer(Wallet, graphql`
+    fragment Wallet_wallet on Wallet{
+        type
+        bankname
+        routingnumber
+        accountnumber
+        zipcode
+        creditcard
+        cvv
+        expmonth
+        expyear
+        amount
+        username
+    }
+`)
+

@@ -1,34 +1,98 @@
 import React from "react";
 import Navigation from "../navigation";
+import {commitMutation, graphql} from "react-relay";
+import environment from "../../environment";
+
+const SignupMutation = graphql`
+    mutation signupMutation($fname: String, $lname: String, $ssn: String, $email: String,$username: String, $password: String){
+        createUser(fname: $fname, lname: $lname, ssn: $ssn, email: $email,username: $username , password: $password){
+            username
+        }
+    }
+`
 class Signup extends React.Component{
+    constructor(){
+        super();
+        this.state = {
+            fname: '',
+            lname: '',
+            ssn: '',
+            username: '',
+            email: '',
+            password: ''
+        }
+        this.onfnameChange = this.onfnameChange.bind(this);
+        this.onlnameChange = this.onlnameChange.bind(this);
+        this.onssnChange = this.onssnChange.bind(this);
+        this.onusernameChange = this.onusernameChange.bind(this);
+        this.onpasswordchange = this.onpasswordchange.bind(this);
+        this.submit = this.submit.bind(this);
+    }
+    onfnameChange(event){
+        this.setState({fname: event.target.value});
+    }
+    onlnameChange(event){
+        this.setState({lname: event.target.value});
+    }
+    onssnChange(event){
+        this.setState({ssn: event.target.value});
+    }
+    onusernameChange(event){
+        this.setState({username: event.target.value, email: event.target.value});
+    }
+    onpasswordchange(event){
+        this.setState({password: event.target.value});
+    }
+    submit(){
+        const variables = {
+            username: this.state.username,
+            password: this.state.password,
+            fname: this.state.fname,
+            lname: this.state.lname,
+            email: this.state.email
+        }
+        commitMutation(environment,{
+            mutation: SignupMutation,
+            variables,
+            onCompleted: (response) => {
+                const user = response.createUser;
+                if(user !== null){
+                    if(user.username !== null){
+                        this.props.history.push("/signin")
+                    }
+                }
+            }
+        })
+
+    }
     render(){
         return (
             <div>
                 <Navigation />
-                <form className="form-signin">
+                <div className="form-signin">
                 <div className="text-center mb-4">
                     <h1 className = "h3 mb-3 font-weight-normal">Sign Up</h1>
                 </div>
                 <div className="form-label-group">
-                        <input type="name" id="inputfname" className="form-control" placeholder="First Name" required autofocus />
+                        <input type="name" id="inputfname" className="form-control" placeholder="First Name" required autofocus value={this.state.fname} onChange={this.onfnameChange} />
                         <label for="inputfname">First Name</label>
                     </div>
                     <div className="form-label-group">
-                            <input type="name" id="inputlname" className="form-control" placeholder="Last Name" required autofocus />
+                            <input type="name" id="inputlname" className="form-control" placeholder="Last Name" required autofocus value={this.state.lname} onChange={this.onlnameChange} />
                             <label for="inputlname">Last Name</label>
                     </div>
                     <div className="form-label-group">
-                                <input type="password" id="ssn" className="form-control" placeholder="Social Security Number" required autofocus />
+                                <input type="password" id="ssn" className="form-control" placeholder="Social Security Number" required autofocus value={this.state.ssn} onChange={this.onssnChange} />
                                 <label for="ssn">Social Security Number</label>
                             </div>
                 <div className="form-label-group">
-                    <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus />
+                    <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus  value={this.state.email} onChange={this.onusernameChange}/>
                     <label for="inputEmail">Email address</label>
                 </div>
 
 
                 <div className="form-label-group">
-                    <input type="password" id="inputPassword" className="form-control" placeholder="Password" required />
+                    <input type="password" id="inputPassword" className="form-control" placeholder="Password" required value={this.state.password} onChange={this.onpasswordchange}/>
                     <label for="inputPassword">Password</label>
                 </div>
 
@@ -37,9 +101,9 @@ class Signup extends React.Component{
                     <input type="checkbox" value="remember-me" /> Remember me
                     </label>
                 </div>
-                <button className="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+                <button className="btn btn-lg btn-primary btn-block"  onClick={this.submit}>Sign Up</button>
                 <p className="mt-5 mb-3 text-muted text-center">© 2019 SecurePay</p>
-                </form>
+                </div>
             </div>
         )
     }
