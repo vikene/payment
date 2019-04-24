@@ -398,11 +398,11 @@
   .primary-theme .sidebar-wrapper .sidebar-header .user-info,
   .primary-theme .sidebar-wrapper .sidebar-brand>a:hover,
   .primary-theme .sidebar-footer>a:hover i {
-      color: #b8bfce;
+      color: #ffffff;
   }
   
   .page-wrapper.primary-theme.toggled #close-sidebar {
-      color: #bdbdbd;
+      color: #ffffff;
   }
   
   .page-wrapper.primary-theme.toggled #close-sidebar:hover {
@@ -425,7 +425,7 @@
   }
   
   .primary-theme .sidebar-wrapper .sidebar-menu .header-menu span {
-      color: #6c7b88;
+      color: #ffffff;
   }
   
   .primary-theme .sidebar-footer {

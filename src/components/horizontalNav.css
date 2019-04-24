@@ -398,7 +398,9 @@
   .primary-theme .sidebar-wrapper .sidebar-header .user-info,
   .primary-theme .sidebar-wrapper .sidebar-brand>a:hover,
   .primary-theme .sidebar-footer>a:hover i {
-      color: #b8bfce;
+      color: white;
+      font-weight: bold;
+      text-align: center;
   }
   
   .page-wrapper.primary-theme.toggled #close-sidebar {
