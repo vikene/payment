@@ -1,6 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import "./horizontalNav.css";
+import Image from "./image/image";
+import logo from './image/logo.png';
 
 export default class HorizontalNav extends React.Component{
     render(){
@@ -8,7 +10,7 @@ export default class HorizontalNav extends React.Component{
             <nav id="sidebar" className="sidebar-wrapper">
                 <div className="sidebar-content">
                 <div className="sidebar-brand">
-                    <Link to="/">SecurePay</Link>
+                    <Link to="/dashboard/"><img src={logo} height="80px" className="img-logo"/></Link>
                     <div id="close-sidebar">
                     <i className="fas fa-times"></i>
                     </div>

@@ -99,7 +99,7 @@
   /*--------------------sidebar-brand----------------------*/
   
   .sidebar-wrapper .sidebar-brand {
-    padding: 10px 20px;
+    padding: 0px;
     display: flex;
     align-items: center;
   }
@@ -398,9 +398,7 @@
   .primary-theme .sidebar-wrapper .sidebar-header .user-info,
   .primary-theme .sidebar-wrapper .sidebar-brand>a:hover,
   .primary-theme .sidebar-footer>a:hover i {
-      color: white;
-      font-weight: bold;
-      text-align: center;
+      color: #b8bfce;
   }
   
   .page-wrapper.primary-theme.toggled #close-sidebar {
@@ -443,4 +441,8 @@
   .primary-theme .sidebar-footer>a:last-child {
       border-right: none;
   }
-  
+  .img-logo{
+    align-content: center;
+    padding: 0%;
+    margin: 0%;
+  }

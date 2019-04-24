@@ -21,4 +21,13 @@
   .UserAvatar--light .UserAvatar--inner {
     border: 1px solid lightgray;
   }
+  .TextBox{
+    align-items: center;
+  }
+  .form-label-group{
+    align-content: center;
+  }
+  .form-control{
+    align-content: center;
+  }
   

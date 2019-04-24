@@ -1,11 +1,40 @@
 import React from "react";
-import Name from "../name";
+import { Textbox, Textarea, Radiobox, Checkbox, Select } from 'react-inputs-validation';
+import 'react-inputs-validation/lib/react-inputs-validation.min.css';
 import UserAvatar from "react-user-avatar";
 import { extname } from "path";
 import "../exam.css";
+import {commitMutation, graphql} from "react-relay";
+import environment from "../../environment";
+
+
 
 
 export default class Settings extends React.Component{
+
+    constructor(){
+        super();
+        this.state = {
+            username: '',
+            fname: ''
+        }
+        this.emailChange = this.emailChange.bind(this);
+        this.nameChange = this.nameChange.bind(this);
+        this.submit = this.submit.bind(this);
+    }
+    emailChange(event){
+        this.setState({username: event.target.value});
+    }
+    nameChange(event){
+        this.setState({fname: event.target.value});
+    }
+    submit(){
+        const variables = {
+            username: this.state.username,
+            fname: this.state.fname
+        }
+        
+    }
     render(){
         return (
             <div className="container-fluid" style={{marginTop: "40px"}}>
@@ -14,25 +43,29 @@ export default class Settings extends React.Component{
                         <div style={{textAlign: "center"}}>
 
                             
-                            <Name/>
-                             <UserAvatar size="100" name={localStorage.getItem('Username')} colors={['black', 'whitesmoke']} className="UserAvatar--inner"/>
+                            
+                             <UserAvatar size="100" name={localStorage.getItem('Username')} colors={['whitesmoke']} className="UserAvatar--inner"/>
                              <h6 style={{color: "#00c730"}}>{localStorage.getItem('Username')}</h6>
-                             <h6 style={{color: "#00c730"}}>{localStorage.getItem("Ssn")}</h6>                           
+                             <h6 style={{color: "#00c730"}}>{localStorage.getItem("Fname")}</h6>                           
 
                         </div>
                     </div>  
                 </div>
                 <hr />
+                <div className="container">
                 <div className="row" >
                     <div className="col-md-12" style={{textAlign: "center"}}>
                         <p style={{color:"#999",fontSize: "22px"}}>Display Name</p>
-                        <div className="card " style={{width: "18rem",margin: "0 auto"}}>
-                        <div className="card-body">
+                        
+                        
                             <div className="row"  style={{width: "100%",margin: "0 auto", textAlign: "center"}}>
-                                <h5>{localStorage.getItem("Fname")}</h5>
+                            <div className="form-label-group">
+                        <input type="email" id="inputEmail" className="form-control" placeholder="Username" required autofocus value={this.state.username} onChange={this.emailChange}/>
+                        <label for="inputEmail">{localStorage.getItem('Username')}</label>
+                    </div>
                                 
-                            </div>
-                        </div>
+                            
+                        
                         </div>
                         <p style={{color:"#999",fontSize: "22px", marginTop: "20px"}}>Phone</p>
                         <div className="card " style={{width: "18rem",margin: "0 auto"}}>
@@ -62,14 +95,9 @@ export default class Settings extends React.Component{
                     </div>
                 </div>
             
-            
+                </div>
             </div>
         )
     }
-    componentDidMount(){
-        let token = localStorage.getItem("Bearer")
-        if(token === null){
-            this.props.history.push("/")
-        }
-    }
+    
 }
