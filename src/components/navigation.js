@@ -1,6 +1,8 @@
 import React from "react";
 import "./navigation.css";
 import {Link} from "react-router-dom";
+import { AwesomeButton } from "react-awesome-button";
+import "react-awesome-button/dist/styles.css";
 
 class Navigation extends React.Component{
     render(){
@@ -18,8 +20,8 @@ class Navigation extends React.Component{
                     
                 </ul>
                 <span className="navbar-text">
-                    <Link to="/signup" className="btn btn-light btn-sm active" role="button" aria-pressed="true">Sign Up</Link>
-                <Link to="/signin" className="btn btn-light btn-sm active" role="button" aria-pressed="true">Sign In</Link>
+                    <Link to="/signup"><AwesomeButton type="primary">Sign Up</AwesomeButton></Link>
+                <Link to="/signin"> <AwesomeButton type="primary">Sign In</AwesomeButton></Link>
                 
                     </span>
                 </div>

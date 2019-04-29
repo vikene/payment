@@ -6,38 +6,82 @@ import { extname } from "path";
 import "../exam.css";
 import {commitMutation, graphql} from "react-relay";
 import environment from "../../environment";
-
-
-
+import useForm from 'react-hook-form';
 
 export default class Settings extends React.Component{
 
-    constructor(){
+    constructor() {
         super();
         this.state = {
-            username: '',
-            fname: ''
+          fields: {},
+          errors: {}
         }
-        this.emailChange = this.emailChange.bind(this);
-        this.nameChange = this.nameChange.bind(this);
-        this.submit = this.submit.bind(this);
-    }
-    emailChange(event){
-        this.setState({username: event.target.value});
-    }
-    nameChange(event){
-        this.setState({fname: event.target.value});
-    }
-    submit(){
-        const variables = {
-            username: this.state.username,
-            fname: this.state.fname
+  
+        this.handleChange = this.handleChange.bind(this);
+        this.submituserRegistrationForm = this.submituserRegistrationForm.bind(this);
+  
+      };
+  
+      handleChange(e) {
+        let fields = this.state.fields;
+        fields[e.target.name] = e.target.value;
+        this.setState({
+          fields
+        });
+  
+      }
+  
+      submituserRegistrationForm(e) {
+        e.preventDefault();
+        if (this.validateForm()) {
+            let fields = {};
+           
+            fields["emailid"] = "";
+           
+            this.setState({fields:fields});
+            alert("Form submitted");
         }
+  
+      }
+  
+      validateForm() {
+  
+        let fields = this.state.fields;
+        let errors = {};
+        let formIsValid = true;
+  
+       
+  
+        if (!fields["emailid"]) {
+          formIsValid = false;
+          errors["emailid"] = "*Please enter your email-ID.";
+        }
+  
+        if (typeof fields["emailid"] !== "undefined") {
+          //regular expression for email validation
+          var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+          if (!pattern.test(fields["emailid"])) {
+            formIsValid = false;
+            errors["emailid"] = "*Please enter valid email-ID.";
+          }
+        }
+  
         
-    }
+  
+        this.setState({
+          errors: errors
+        });
+        return formIsValid;
+  
+  
+      }
+  
+  
+  
+    
     render(){
         return (
-            <div className="container-fluid" style={{marginTop: "40px"}}>
+            <div className="container-fluid" style={{marginTop: "10px"}}>
                 <div className="row" style={{height: "250px"}}>
                     <div  style={{margin: "0 auto"}}>
                         <div style={{textAlign: "center"}}>
@@ -52,51 +96,25 @@ export default class Settings extends React.Component{
                     </div>  
                 </div>
                 <hr />
-                <div className="container">
-                <div className="row" >
-                    <div className="col-md-12" style={{textAlign: "center"}}>
-                        <p style={{color:"#999",fontSize: "22px"}}>Display Name</p>
-                        
-                        
-                            <div className="row"  style={{width: "100%",margin: "0 auto", textAlign: "center"}}>
-                            <div className="form-label-group">
-                        <input type="email" id="inputEmail" className="form-control" placeholder="Username" required autofocus value={this.state.username} onChange={this.emailChange}/>
-                        <label for="inputEmail">{localStorage.getItem('Username')}</label>
-                    </div>
-                                
-                            
-                        
-                        </div>
-                        <p style={{color:"#999",fontSize: "22px", marginTop: "20px"}}>Phone</p>
-                        <div className="card " style={{width: "18rem",margin: "0 auto"}}>
-                        <div className="card-body">
-                            <div className="row"  style={{width: "100%",margin: "0 auto", textAlign: "center"}}>
-                                <h5>(469) 270-1938</h5>
-                            </div>
-                        </div>
-                        </div>   
-                        <p style={{color:"#999",fontSize: "22px", marginTop: "20px"}}>Change PIN</p>
-                        <div className="card " style={{width: "18rem",margin: "0 auto"}}>
-                        <div className="card-body">
-                            <div className="row"  style={{width: "100%",margin: "0 auto", textAlign: "center"}}>
-                                <h5>****</h5>
-                            </div>
-                        </div>
-                        </div>
-                        <p style={{color:"#999",fontSize: "22px", marginTop: "20px"}}>Profile Description</p>
-                        <div className="card " style={{width: "18rem",margin: "0 auto"}}>
-                        <div className="card-body">
-                            <div className="row"  style={{width: "100%",margin: "0 auto", textAlign: "center"}}>
-                                <p>This!</p>
-                            </div>
-                        </div>
-                        </div>
-                        <button className="btn btn-primary" style={{margin: "20px"}}>Update</button>
-                    </div>
+                <div className="form-update">
+                <div className="text-center mb-4">
+                <h1 className = "h3 mb-3 font-weight-normal">Update your Information</h1>
+                
                 </div>
-            
+
+                <form method="post"  name="userRegistrationForm"  onSubmit= {this.submituserRegistrationForm}>
+                    
+                <label>Email ID:</label>
+        <input className="mb-3"type="text" name="emailid" value={this.state.fields.emailid} onChange={this.handleChange}  />
+        <div className="errorMsg">{this.state.errors.emailid}</div>
+                <button className="btn btn-lg btn-success "  onClick={this.submit} value="Register">Update!</button>
+                <p className="mt-5 mb-3 text-muted text-center">© 2019 SecurePay</p>
+                </form>
                 </div>
-            </div>
+                
+                
+                </div>
+                
         )
     }
     

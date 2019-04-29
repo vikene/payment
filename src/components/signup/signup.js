@@ -3,6 +3,7 @@ import Navigation from "../navigation";
 import {commitMutation, graphql} from "react-relay";
 import environment from "../../environment";
 
+
 const SignupMutation = graphql`
     mutation signupMutation($fname: String, $lname: String, $ssn: String, $email: String,$username: String, $password: String){
         createUser(fname: $fname, lname: $lname, ssn: $ssn, email: $email,username: $username , password: $password){
@@ -81,10 +82,7 @@ class Signup extends React.Component{
                             <input type="name" id="inputlname" className="form-control" placeholder="Last Name" required autofocus value={this.state.lname} onChange={this.onlnameChange} />
                             <label for="inputlname">Last Name</label>
                     </div>
-                    <div className="form-label-group">
-                                <input type="password" id="ssn" className="form-control" placeholder="Social Security Number" required autofocus value={this.state.ssn} onChange={this.onssnChange} />
-                                <label for="ssn">Social Security Number</label>
-                            </div>
+                    
                 <div className="form-label-group">
                     <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus  value={this.state.email} onChange={this.onusernameChange}/>
                     <label for="inputEmail">Email address</label>
@@ -101,7 +99,7 @@ class Signup extends React.Component{
                     <input type="checkbox" value="remember-me" /> Remember me
                     </label>
                 </div>
-                <button className="btn btn-lg btn-primary btn-block"  onClick={this.submit}>Sign Up</button>
+                <button className="btn btn-lg btn-success btn-block"  onClick={this.submit}>Sign Up</button>
                 <p className="mt-5 mb-3 text-muted text-center">© 2019 SecurePay</p>
                 </div>
             </div>

@@ -11,7 +11,7 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: bold;
     font-size: xx-large;
-    color: rgb(0, 72, 255);
+    color: #222629;
   }
   
   .UserAvatar--light {
@@ -24,10 +24,34 @@
   .TextBox{
     align-items: center;
   }
-  .form-label-group{
-    align-content: center;
+  form label, form input {
+    display: block;
+    margin-bottom: 10px;
+    width: 90%
   }
-  .form-control{
-    align-content: center;
+  
+  form input {
+    padding: 10px;
+    border: solid 1px #BDC7D8;
+  
+  }
+  
+  .button {
+    background-color: #00BFFF;
+    border-color: #3ac162;
+    font-weight: bold;
+    padding: 12px 15px;
+    color: #ffffff;
+  }
+  
+  .errorMsg {
+    color: #cc0000;
+    margin-bottom: 12px;
+    font-style: italic;
+  }
+  
+  .sucessMsg {
+    color: #6B8E23;
+    margin-bottom: 10px;
   }
   
