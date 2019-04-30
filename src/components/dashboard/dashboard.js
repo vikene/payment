@@ -15,7 +15,7 @@ class Dashboard extends React.Component{
                 <Link id="show-sidebar" className="btn btn-sm btn-dark" to="/dashboard/">
                     <i className="fas fa-bars"></i>
                 </Link>
-                <HorizontalNav fname={localStorage.getItem("Fname")}  username={localStorage.getItem("Username")}  userid="12345"/>
+                <HorizontalNav  username={localStorage.getItem("Username")} />
                 <main className="page-content">
                         <Route exact path="/dashboard/" component={Transaction} />
                         <Route path="/dashboard/wallet" component={WalletPage} />

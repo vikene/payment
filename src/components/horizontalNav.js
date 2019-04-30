@@ -16,10 +16,9 @@ export default class HorizontalNav extends React.Component{
                     </div>
                 </div>
                 <div className="sidebar-header">
-                    <div className="user-pic">
-                    </div>
+                    
                     <div className="user-info">
-                    <span>{this.props.fname}</span>
+                    <span></span>
                     <span className="user-name">{this.props.username}
                     </span>
                     <span></span>

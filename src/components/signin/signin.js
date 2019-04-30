@@ -67,14 +67,14 @@ export default class Signin extends React.Component{
                     </div>
 
                     <div className="form-label-group">
-                        <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus value={this.state.username} onChange={this.emailChange} pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"/>
-                        <label for="inputEmail">Email address</label>
+                        <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus value={this.state.username} onChange={this.emailChange} pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"/>
+                        <label htmlFor="inputEmail">Email address</label>
                        
                     </div>
 
                     <div className="form-label-group">
                         <input type="password" id="inputPassword" className="form-control" placeholder="Password" required  value={this.state.password} onChange={this.passwordChange}/>
-                        <label for="inputPassword">Password</label>
+                        <label htmlFor="inputPassword">Password</label>
                        
                     </div>
 

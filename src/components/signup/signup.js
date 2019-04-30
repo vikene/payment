@@ -75,23 +75,23 @@ class Signup extends React.Component{
                     <h1 className = "h3 mb-3 font-weight-normal">Sign Up</h1>
                 </div>
                 <div className="form-label-group">
-                        <input type="name" id="inputfname" className="form-control" placeholder="First Name" required autofocus value={this.state.fname} onChange={this.onfnameChange} />
-                        <label for="inputfname">First Name</label>
+                        <input type="name" id="inputfname" className="form-control" placeholder="First Name" required autoFocus value={this.state.fname} onChange={this.onfnameChange} />
+                        <label htmlFor="inputfname">First Name</label>
                     </div>
                     <div className="form-label-group">
-                            <input type="name" id="inputlname" className="form-control" placeholder="Last Name" required autofocus value={this.state.lname} onChange={this.onlnameChange} />
-                            <label for="inputlname">Last Name</label>
+                            <input type="name" id="inputlname" className="form-control" placeholder="Last Name" required autoFocus value={this.state.lname} onChange={this.onlnameChange} />
+                            <label htmlFor="inputlname">Last Name</label>
                     </div>
                     
                 <div className="form-label-group">
-                    <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus  value={this.state.email} onChange={this.onusernameChange}/>
-                    <label for="inputEmail">Email address</label>
+                    <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus  value={this.state.email} onChange={this.onusernameChange}/>
+                    <label htmlFor="inputEmail">Email address</label>
                 </div>
 
 
                 <div className="form-label-group">
                     <input type="password" id="inputPassword" className="form-control" placeholder="Password" required value={this.state.password} onChange={this.onpasswordchange}/>
-                    <label for="inputPassword">Password</label>
+                    <label htmlFor="inputPassword">Password</label>
                 </div>
 
                 <div className="checkbox mb-3">
