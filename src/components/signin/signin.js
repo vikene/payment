@@ -58,11 +58,7 @@ export default class Signin extends React.Component{
              isError=true;
              errors.passError="Nice try, password cannot be empty!"
          }
-         if(!(this.state.password).match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)){
-             isError=true;
-             errors.passError="Nice try, password cannot be empty!"
-
-         }
+         
           this.setState({
             ...this.state,
             ...errors
@@ -110,6 +106,8 @@ export default class Signin extends React.Component{
 
                     <div className="form-label-group">
                     <input type="email" id="inputemail" className="form-control" placeholder="Email" required  value={this.state.username} onChange={this.emailChange} />
+                    <label htmlFor="inputEmail">Email address</label>
+
                     <div className="err">{this.state.usernameError}</div>
 
                        
@@ -117,6 +115,8 @@ export default class Signin extends React.Component{
 
                     <div className="form-label-group">
                         <input type="password" id="inputPassword" className="form-control" placeholder="Password" required  value={this.state.password} onChange={this.passwordChange}/>
+                        <label htmlFor="inputPassword">Password</label>
+
                         <div className="err">{this.state.passError}</div>
 
                        
@@ -128,6 +128,7 @@ export default class Signin extends React.Component{
                         
                     </div>
                     <button className="btn btn-large btn-success btn-block" onClick={this.submit}>Sign In</button>
+
                     <p className="mt-5 mb-3 text-muted text-center">© 2019 SecurePay</p>
                 </div>
             </div>

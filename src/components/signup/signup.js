@@ -49,10 +49,65 @@ class Signup extends React.Component{
     onpasswordchange(event){
         this.setState({password: event.target.value});
     }
-    submit(){
-        if(!this.state.username){
+    validate = () => {
+        let isError = false;
+        const errors = {
+            usernameerror:'',
+            passerror:'',
+            fnameerror:'',
+            lnameerror:''
 
         }
+        if (!(this.state.username)) {
+            isError = true;
+            errors.usernameerror = "Username is your email and cannot be empty!";
+          }
+
+          var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+         if(!pattern.test(this.state.username)){
+            isError = true;
+            errors.usernameerror = "Please enter a valid email!";
+
+         }
+
+         if(!(this.state.password)){
+             isError=true;
+             errors.passerror="Nice try, password cannot be empty!";
+         }
+         if(!(this.state.password).match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)){
+             isError=true;
+             errors.passerror="Nice try, password cannot be empty!";
+
+         }
+         if(!(this.state.fname)){
+             isError=true;
+             errors.fnameerror="First Name cannot be empty!";
+         }
+         if(!(this.state.lname)){
+            isError=true;
+            errors.lnameerror="Last Name cannot be empty!";
+         }
+         if(!(this.state.fname).match(/^[a-zA-Z ]+$/)){
+             isError=true;
+             errors.fnameerror="Enter only alphabets!"
+         }
+         if(!(this.state.lname).match(/^[a-zA-Z ]+$/)){
+            isError=true;
+            errors.lnameerror="Enter only alphabets!"
+        }
+          this.setState({
+            ...this.state,
+            ...errors
+          });
+      
+          return isError;
+
+
+    }
+    submit(){
+        const err = this.validate();
+
+
         const variables = {
             username: this.state.username,
             password: this.state.password,
@@ -60,6 +115,7 @@ class Signup extends React.Component{
             lname: this.state.lname,
             email: this.state.email
         }
+        if(!err){
         commitMutation(environment,{
             mutation: SignupMutation,
             variables,
@@ -72,8 +128,9 @@ class Signup extends React.Component{
                 }
             }
         })
-
     }
+}
+
     render(){
         return (
             <div>
@@ -85,21 +142,29 @@ class Signup extends React.Component{
                 <div className="form-label-group">
                         <input type="name" id="inputfname" className="form-control" placeholder="First Name" required autoFocus value={this.state.fname} onChange={this.onfnameChange} />
                         <label htmlFor="inputfname">First Name</label>
+                        <div className="err">{this.state.fnameerror}</div>
+
                     </div>
                     <div className="form-label-group">
                             <input type="name" id="inputlname" className="form-control" placeholder="Last Name" required autoFocus value={this.state.lname} onChange={this.onlnameChange} />
                             <label htmlFor="inputlname">Last Name</label>
+                            <div className="err">{this.state.lnameerror}</div>
+
                     </div>
                     
                 <div className="form-label-group">
                     <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus  value={this.state.email} onChange={this.onusernameChange}/>
                     <label htmlFor="inputEmail">Email address</label>
+                    <div className="err">{this.state.usernameerror}</div>
+
                 </div>
 
 
                 <div className="form-label-group">
                     <input type="password" id="inputPassword" className="form-control" placeholder="Password" required value={this.state.password} onChange={this.onpasswordchange}/>
                     <label htmlFor="inputPassword">Password</label>
+                    <div className="err">{this.state.passerror}</div>
+
                 </div>
 
                 <div className="checkbox mb-3">
