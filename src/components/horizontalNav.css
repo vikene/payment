@@ -402,8 +402,7 @@
   .primary-theme .sidebar-wrapper .sidebar-brand>a:hover,
   .primary-theme .sidebar-footer>a:hover i {
       color: rgb(122, 179, 57);
-      font-weight: bold;
-      font-style:italic;
+
   }
   
   .page-wrapper.primary-theme.toggled #close-sidebar {

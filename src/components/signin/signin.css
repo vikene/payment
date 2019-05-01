@@ -70,3 +70,12 @@
   color: rgb(87, 169, 5);
   background-color: rgb(87, 169, 5);
 }
+.err{
+  color: red;
+  font-style: italic;
+  font-size: 15px;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  text-align: center;
+
+}

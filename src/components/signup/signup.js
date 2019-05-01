@@ -1,5 +1,6 @@
 import React from "react";
 import Navigation from "../navigation";
+import "../signin/signin.css";
 import {commitMutation, graphql} from "react-relay";
 import environment from "../../environment";
 
@@ -16,11 +17,15 @@ class Signup extends React.Component{
         super();
         this.state = {
             fname: '',
+            fnameerror:'',
             lname: '',
+            lnameerror:'',
             ssn: '',
             username: '',
+            usernameerror:'',
             email: '',
-            password: ''
+            password: '',
+            passerror:''
         }
         this.onfnameChange = this.onfnameChange.bind(this);
         this.onlnameChange = this.onlnameChange.bind(this);
@@ -45,6 +50,9 @@ class Signup extends React.Component{
         this.setState({password: event.target.value});
     }
     submit(){
+        if(!this.state.username){
+
+        }
         const variables = {
             username: this.state.username,
             password: this.state.password,

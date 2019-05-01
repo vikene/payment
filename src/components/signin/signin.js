@@ -22,6 +22,8 @@ export default class Signin extends React.Component{
         this.state = {
             username: '',
             password: '',
+            usernameError: '',
+            passError:''
             
         }
         this.emailChange = this.emailChange.bind(this);
@@ -34,12 +36,51 @@ export default class Signin extends React.Component{
     passwordChange(event){
         this.setState({password: event.target.value});
     }
+    validate = () => {
+        let isError = false;
+        const errors = {
+            usernameError:'',
+            passError:''
+        }
+        if (!(this.state.username)) {
+            isError = true;
+            errors.usernameError = "Username is your email and cannot be empty!";
+          }
+
+          var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+         if(!pattern.test(this.state.username)){
+            isError = true;
+            errors.usernameError = "Please enter a valid email!";
+
+         }
+
+         if(!(this.state.password)){
+             isError=true;
+             errors.passError="Nice try, password cannot be empty!"
+         }
+         if(!(this.state.password).match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)){
+             isError=true;
+             errors.passError="Nice try, password cannot be empty!"
+
+         }
+          this.setState({
+            ...this.state,
+            ...errors
+          });
+      
+          return isError;
+
+
+    }
     submit(){
+        const err = this.validate();
+
        
         const variables = {
             username: this.state.username,
             password: this.state.password
         }
+        if (!err){
         commitMutation(environment,{
             mutation: SignInMutation,
             variables,
@@ -55,6 +96,7 @@ export default class Signin extends React.Component{
             }
         })
     }
+    }
      
     render(){
         return (
@@ -67,14 +109,16 @@ export default class Signin extends React.Component{
                     </div>
 
                     <div className="form-label-group">
-                        <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus value={this.state.username} onChange={this.emailChange} pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"/>
-                        <label htmlFor="inputEmail">Email address</label>
+                    <input type="email" id="inputemail" className="form-control" placeholder="Email" required  value={this.state.username} onChange={this.emailChange} />
+                    <div className="err">{this.state.usernameError}</div>
+
                        
                     </div>
 
                     <div className="form-label-group">
                         <input type="password" id="inputPassword" className="form-control" placeholder="Password" required  value={this.state.password} onChange={this.passwordChange}/>
-                        <label htmlFor="inputPassword">Password</label>
+                        <div className="err">{this.state.passError}</div>
+
                        
                     </div>
 
