@@ -4,45 +4,34 @@ import 'react-inputs-validation/lib/react-inputs-validation.min.css';
 import UserAvatar from "react-user-avatar";
 import { extname } from "path";
 import "../exam.css";
-
-
-
-
+import {commitMutation, graphql} from "react-relay";
+import environment from "../../environment";
 
 export default class Settings extends React.Component{
 
-    constructor() {
+    constructor(){
         super();
         this.state = {
-          fname: '',
-          lname: '',
-          username: ''
+            username: '',
+            fname: ''
         }
-        this.onfnameChange = this.onfnameChange.bind(this);
-        this.onlnameChange = this.onlnameChange.bind(this);
-  
-       
-      }
-    onfnameChange(event){
+        this.emailChange = this.emailChange.bind(this);
+        this.nameChange = this.nameChange.bind(this);
+        this.submit = this.submit.bind(this);
+    }
+    emailChange(event){
+        this.setState({username: event.target.value});
+    }
+    nameChange(event){
         this.setState({fname: event.target.value});
     }
-    onlnameChange(event){
-        this.setState({lname: event.target.value});
+    submit(){
+        const variables = {
+            username: this.state.username,
+            fname: this.state.fname
+        }
+        
     }
-    onusernameChange(event){
-      this.setState({username: event.target.value, email: event.target.value});
-  }
-  submit(){
-    const variables = {
-      username: this.state.username,
-      fname: this.state.fname,
-      lname: this.state.lname
-    }
-    
-  }
-      
-  
-
     render(){
         return (
             <div className="container-fluid" style={{marginTop: "10px"}}>
@@ -54,7 +43,7 @@ export default class Settings extends React.Component{
                             
                              <UserAvatar size="100" name={localStorage.getItem('Username')} colors={['whitesmoke']} className="UserAvatar--inner"/>
                              <h6 style={{color: "#00c730"}}>{localStorage.getItem('Username')}</h6>
-                                            
+                             <h6 style={{color: "#00c730"}}>{localStorage.getItem("Fname")}</h6>                           
 
                         </div>
                     </div>  
@@ -65,7 +54,6 @@ export default class Settings extends React.Component{
                 <h1 className = "h3 mb-3 font-weight-normal">Update your Information</h1>
                 
                 </div>
-
 
                 <div className="form-label-group">
                         <input type="name" id="inputfname" className="form-control" placeholder="First Name" required autofocus value={this.state.fname} onChange={this.onfnameChange} />
@@ -80,18 +68,13 @@ export default class Settings extends React.Component{
                     <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus  value={this.state.email} onChange={this.onusernameChange}/>
                     <label for="inputEmail">Email address</label>
                 </div>
-                <button className="btn btn-lg btn-success btn-block"  onClick={this.submit}>Update!</button>
+                <button className="btn btn-lg btn-primary btn-block"  onClick={this.submit}>Update!</button>
                 <p className="mt-5 mb-3 text-muted text-center">© 2019 SecurePay</p>
                 </div>
                 
-
                 </div>
                 
         )
     }
     
-
 }
-
-
-

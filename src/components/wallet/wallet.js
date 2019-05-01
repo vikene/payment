@@ -2,7 +2,7 @@ import React from "react";
 import "./wallet.css";
 import {createFragmentContainer, graphql} from "react-relay";
 
-class Wallet extends React.Component{
+ class Wallet extends React.Component{
     render(){
         return (
             <div className="container-fluid">

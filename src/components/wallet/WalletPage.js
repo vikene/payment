@@ -2,6 +2,7 @@ import React from "react";
 import {graphql, QueryRenderer} from 'react-relay';
 import environment from "../../environment";
 import Wallet from "./Wallet";
+import Newwallet from "./Newwallet";
 
 const WalletQuery = graphql`
     query WalletPageQuery($username: String){
@@ -29,7 +30,7 @@ export default class WalletPage extends React.Component{
                     return (<Wallet wallet={props.getWallet} />)
                     }
                     else{
-                        return <div>No item available</div>
+                        return (<Newwallet wallet={props.getnewwallet}/>)
                     }
                   
                 }

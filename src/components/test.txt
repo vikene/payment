@@ -1,0 +1,105 @@
+const WalletMutation = graphql`
+    mutation walletMutation($bankname: String, $routingnumber: String, $accountnumber: String, $zipcode: String,$creditcard: String, $cvv: String, $expmonth: String,$expyear: String, $amount: Float, $username: String ){
+        addWallet(bankname: $bankname, routingnumber: $routingnumber, accountnumber: $accountnumber, zipcode: $zipcode, creditcard: $creditcard, cvv: $cvv, expmonth: $expmonth, expyear: $expyear, amount: $amount, username: $username){
+            username
+
+        }
+           
+    }
+`
+
+
+constructor(){
+         super();
+         this.state={
+            bankname:'',
+            routingnumber:'',
+            accountnumber:'',
+            zipcode:'',
+            creditcard:'',
+            cvv:'',
+            expmonth:'',
+            expyear:'',
+            amount:'',
+            username:''
+
+
+         }
+         this.onusernameChange = this.onusernameChange.bind(this);
+         this.onbanknameChange=this.onbanknameChange.bind(this);
+         this.onroutingnumberChange=this.onroutingnumberChange.bind(this);
+         this.onaccnumberChange=this.onaccnumberChange.bind(this);
+         this.onzipChange=this.onzipChange.bind(this);
+         this.oncardChange=this.oncardChange.bind(this);
+         this.oncvvChange=this.oncvvChange.bind(this);
+         this.onexpmChange=this.onexpmChange.bind(this);
+         this.onexpyChange=this.onexpyChange.bind(this);
+         this.onamountChange=this.onamountChange.bind(this);
+         this.submit = this.submit.bind(this);
+
+
+
+
+     }
+     onusernameChange(event){
+        this.setState({username: event.target.value, email: event.target.value});
+    }
+    onbanknameChange(event){
+        this.setState({bankname:event.target.value});
+
+    }
+    onroutingnumberChange(event){
+        this.setState({routingnumber:event.target.value});
+
+    }
+    onaccnumberChange(event){
+        this.setState({accountnumber:event.target.value});
+    }
+    onzipChange(event){
+        this.setState({zipcode:event.target.value});
+        
+    }
+    oncardChange(event){
+        this.setState({creditcard:event.target.value});
+
+    }
+    oncvvChange(event){
+        this.setState({cvv:event.target.value});
+    }
+    onexpmChange(event){
+        this.setState({expmonth:event.target.value});
+    }
+    onexpyChange(event){
+        this.setState({expyear:event.target.value});
+    }
+    onamountChange(event){
+        this.setState({amount:event.target.value});
+    }
+    submit(){
+        const variables = {
+            bankname:this.state.bankname,
+            routingnumber:this.state.routingnumber,
+            accountnumber:this.state.accountnumber,
+            zipcode:this.state.zipcode,
+            creditcard:this.state.creditcard,
+            cvv:this.state.cvv,
+            expmonth:this.state.expmonth,
+            expyear:this.state.expyear,
+            amount:this.state.amount,
+            username:this.state.username
+           
+        }
+        commitMutation(environment,{
+            mutation: WalletMutation,
+            variables,
+            onCompleted: (response) => {
+                const wallet = response.addWallet;
+                if(wallet !== null){
+                    if(wallet.username !== null){
+                        this.props.history.push("/")
+                    }
+                }
+            }
+        })
+
+    }

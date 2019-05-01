@@ -1,7 +1,9 @@
 import React from "react";
 import Navigation from "../navigation";
+import "../signin/signin.css";
 import {commitMutation, graphql} from "react-relay";
 import environment from "../../environment";
+
 
 const SignupMutation = graphql`
     mutation signupMutation($fname: String, $lname: String, $ssn: String, $email: String,$username: String, $password: String){
@@ -15,11 +17,15 @@ class Signup extends React.Component{
         super();
         this.state = {
             fname: '',
+            fnameerror:'',
             lname: '',
+            lnameerror:'',
             ssn: '',
             username: '',
+            usernameerror:'',
             email: '',
-            password: ''
+            password: '',
+            passerror:''
         }
         this.onfnameChange = this.onfnameChange.bind(this);
         this.onlnameChange = this.onlnameChange.bind(this);
@@ -43,7 +49,65 @@ class Signup extends React.Component{
     onpasswordchange(event){
         this.setState({password: event.target.value});
     }
+    validate = () => {
+        let isError = false;
+        const errors = {
+            usernameerror:'',
+            passerror:'',
+            fnameerror:'',
+            lnameerror:''
+
+        }
+        if (!(this.state.username)) {
+            isError = true;
+            errors.usernameerror = "Username is your email and cannot be empty!";
+          }
+
+          var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+         if(!pattern.test(this.state.username)){
+            isError = true;
+            errors.usernameerror = "Please enter a valid email!";
+
+         }
+
+         if(!(this.state.password)){
+             isError=true;
+             errors.passerror="Nice try, password cannot be empty!";
+         }
+         if(!(this.state.password).match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)){
+             isError=true;
+             errors.passerror="Nice try, password cannot be empty!";
+
+         }
+         if(!(this.state.fname)){
+             isError=true;
+             errors.fnameerror="First Name cannot be empty!";
+         }
+         if(!(this.state.lname)){
+            isError=true;
+            errors.lnameerror="Last Name cannot be empty!";
+         }
+         if(!(this.state.fname).match(/^[a-zA-Z ]+$/)){
+             isError=true;
+             errors.fnameerror="Enter only alphabets!"
+         }
+         if(!(this.state.lname).match(/^[a-zA-Z ]+$/)){
+            isError=true;
+            errors.lnameerror="Enter only alphabets!"
+        }
+          this.setState({
+            ...this.state,
+            ...errors
+          });
+      
+          return isError;
+
+
+    }
     submit(){
+        const err = this.validate();
+
+
         const variables = {
             username: this.state.username,
             password: this.state.password,
@@ -51,6 +115,7 @@ class Signup extends React.Component{
             lname: this.state.lname,
             email: this.state.email
         }
+        if(!err){
         commitMutation(environment,{
             mutation: SignupMutation,
             variables,
@@ -63,8 +128,9 @@ class Signup extends React.Component{
                 }
             }
         })
-
     }
+}
+
     render(){
         return (
             <div>
@@ -74,26 +140,31 @@ class Signup extends React.Component{
                     <h1 className = "h3 mb-3 font-weight-normal">Sign Up</h1>
                 </div>
                 <div className="form-label-group">
-                        <input type="name" id="inputfname" className="form-control" placeholder="First Name" required autofocus value={this.state.fname} onChange={this.onfnameChange} />
-                        <label for="inputfname">First Name</label>
+                        <input type="name" id="inputfname" className="form-control" placeholder="First Name" required autoFocus value={this.state.fname} onChange={this.onfnameChange} />
+                        <label htmlFor="inputfname">First Name</label>
+                        <div className="err">{this.state.fnameerror}</div>
+
                     </div>
                     <div className="form-label-group">
-                            <input type="name" id="inputlname" className="form-control" placeholder="Last Name" required autofocus value={this.state.lname} onChange={this.onlnameChange} />
-                            <label for="inputlname">Last Name</label>
+                            <input type="name" id="inputlname" className="form-control" placeholder="Last Name" required autoFocus value={this.state.lname} onChange={this.onlnameChange} />
+                            <label htmlFor="inputlname">Last Name</label>
+                            <div className="err">{this.state.lnameerror}</div>
+
                     </div>
-                    <div className="form-label-group">
-                                <input type="password" id="ssn" className="form-control" placeholder="Social Security Number" required autofocus value={this.state.ssn} onChange={this.onssnChange} />
-                                <label for="ssn">Social Security Number</label>
-                            </div>
+                    
                 <div className="form-label-group">
-                    <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus  value={this.state.email} onChange={this.onusernameChange}/>
-                    <label for="inputEmail">Email address</label>
+                    <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus  value={this.state.email} onChange={this.onusernameChange}/>
+                    <label htmlFor="inputEmail">Email address</label>
+                    <div className="err">{this.state.usernameerror}</div>
+
                 </div>
 
 
                 <div className="form-label-group">
                     <input type="password" id="inputPassword" className="form-control" placeholder="Password" required value={this.state.password} onChange={this.onpasswordchange}/>
-                    <label for="inputPassword">Password</label>
+                    <label htmlFor="inputPassword">Password</label>
+                    <div className="err">{this.state.passerror}</div>
+
                 </div>
 
                 <div className="checkbox mb-3">
@@ -101,7 +172,7 @@ class Signup extends React.Component{
                     <input type="checkbox" value="remember-me" /> Remember me
                     </label>
                 </div>
-                <button className="btn btn-lg btn-primary btn-block"  onClick={this.submit}>Sign Up</button>
+                <button className="btn btn-lg btn-success btn-block"  onClick={this.submit}>Sign Up</button>
                 <p className="mt-5 mb-3 text-muted text-center">© 2019 SecurePay</p>
                 </div>
             </div>
