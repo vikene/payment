@@ -4,6 +4,7 @@ import "../signin/signin.css";
 import {commitMutation, graphql} from "react-relay";
 import environment from "../../environment";
 
+
 const sgMail = require('@sendgrid/mail');
 const SignupMutation = graphql`
     mutation signupMutation($fname: String, $lname: String, $ssn: String, $email: String,$username: String, $password: String){
@@ -75,10 +76,11 @@ class Signup extends React.Component{
              errors.passerror="Nice try, password cannot be empty!";
          }
          if(!(this.state.password).match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)){
-             isError=true;
-             errors.passerror="Nice try, password cannot be empty!";
+           isError=true;
+         errors.passerror="Try a STRONGER password!";
 
-         }
+
+       }
          if(!(this.state.fname)){
              isError=true;
              errors.fnameerror="First Name cannot be empty!";
@@ -104,18 +106,12 @@ class Signup extends React.Component{
 
 
     }
+
+    
     submit(){
         const err = this.validate();
-        const sgMail = require('@sendgrid/mail');
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-        const msg = {
-          to: this.state.username,
-          from: 'nam.sivvv@gmail.com',
-          subject: 'Welcome to SecurePay!',
-          text: 'You are now SecurePay fam!',
-          html: '<strong>We are so excited!</strong>',
-        };
-        sgMail.send(msg);
+
+
 
         const variables = {
             username: this.state.username,
@@ -125,8 +121,6 @@ class Signup extends React.Component{
             email: this.state.email
         }
         if(!err){
-
-
 
         commitMutation(environment,{
             mutation: SignupMutation,

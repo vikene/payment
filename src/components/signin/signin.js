@@ -58,6 +58,11 @@ export default class Signin extends React.Component{
              isError=true;
              errors.passError="Nice try, password cannot be empty!"
          }
+         if(!(this.state.password).match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)){
+
+             isError=true;
+             errors.passError="Try again!!";
+       }
 
           this.setState({
             ...this.state,
