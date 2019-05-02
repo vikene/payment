@@ -12,7 +12,7 @@ const SignInMutation = graphql`
         login(username: $username , password: $password){
             username
             token
-            
+
         }
     }
 `
@@ -24,7 +24,7 @@ export default class Signin extends React.Component{
             password: '',
             usernameError: '',
             passError:''
-            
+
         }
         this.emailChange = this.emailChange.bind(this);
         this.passwordChange = this.passwordChange.bind(this);
@@ -58,12 +58,12 @@ export default class Signin extends React.Component{
              isError=true;
              errors.passError="Nice try, password cannot be empty!"
          }
-         
+
           this.setState({
             ...this.state,
             ...errors
           });
-      
+
           return isError;
 
 
@@ -71,7 +71,7 @@ export default class Signin extends React.Component{
     submit(){
         const err = this.validate();
 
-       
+
         const variables = {
             username: this.state.username,
             password: this.state.password
@@ -93,24 +93,24 @@ export default class Signin extends React.Component{
         })
     }
     }
-     
+
     render(){
         return (
             <div>
                 <Navigation />
-                
+
                 <div className="form-signin">
                     <div className="text-center mb-4">
                         <h1 className = "h3 mb-3 font-weight-normal">Sign In</h1>
                     </div>
 
                     <div className="form-label-group">
-                    <input type="email" id="inputemail" className="form-control" placeholder="Email" required  value={this.state.username} onChange={this.emailChange} />
-                    <label htmlFor="inputEmail">Email address</label>
+                    <input type="text" id="inputemail" className="form-control" placeholder="Email" required  value={this.state.username} onChange={this.emailChange} />
+                    <label htmlFor="inputemail">Email address</label>
 
                     <div className="err">{this.state.usernameError}</div>
 
-                       
+
                     </div>
 
                     <div className="form-label-group">
@@ -119,13 +119,13 @@ export default class Signin extends React.Component{
 
                         <div className="err">{this.state.passError}</div>
 
-                       
+
                     </div>
 
                     <div className="checkbox mb-3">
                         <label> </label>
                         <input type="checkbox" value="remember-me" /> Remember me
-                        
+
                     </div>
                     <button className="btn btn-large btn-success btn-block" onClick={this.submit}>Sign In</button>
 
@@ -135,6 +135,6 @@ export default class Signin extends React.Component{
         )
     }
     componentDidMount(){
-       
+
     }
 }

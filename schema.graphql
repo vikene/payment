@@ -12,6 +12,7 @@ type Mutation {
   addWallet(type: String, bankname: String, routingnumber: String, accountnumber: String, zipcode: String, creditcard: String, cvv: String, expmonth: String, expyear: String, amount: Float, username: String): Wallet
   addTransaction(f_username: String, t_username: String, amount: Float, date: String, reason: String): Transaction
   deleteFriend(username: String, friendusername: String): String
+  
 }
 
 type Query {

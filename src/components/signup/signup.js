@@ -4,7 +4,7 @@ import "../signin/signin.css";
 import {commitMutation, graphql} from "react-relay";
 import environment from "../../environment";
 
-
+const sgMail = require('@sendgrid/mail');
 const SignupMutation = graphql`
     mutation signupMutation($fname: String, $lname: String, $ssn: String, $email: String,$username: String, $password: String){
         createUser(fname: $fname, lname: $lname, ssn: $ssn, email: $email,username: $username , password: $password){
@@ -99,14 +99,23 @@ class Signup extends React.Component{
             ...this.state,
             ...errors
           });
-      
+
           return isError;
 
 
     }
     submit(){
         const err = this.validate();
-
+        const sgMail = require('@sendgrid/mail');
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        const msg = {
+          to: this.state.username,
+          from: 'nam.sivvv@gmail.com',
+          subject: 'Welcome to SecurePay!',
+          text: 'You are now SecurePay fam!',
+          html: '<strong>We are so excited!</strong>',
+        };
+        sgMail.send(msg);
 
         const variables = {
             username: this.state.username,
@@ -116,6 +125,9 @@ class Signup extends React.Component{
             email: this.state.email
         }
         if(!err){
+
+
+
         commitMutation(environment,{
             mutation: SignupMutation,
             variables,
@@ -151,7 +163,7 @@ class Signup extends React.Component{
                             <div className="err">{this.state.lnameerror}</div>
 
                     </div>
-                    
+
                 <div className="form-label-group">
                     <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus  value={this.state.email} onChange={this.onusernameChange}/>
                     <label htmlFor="inputEmail">Email address</label>
