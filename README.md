@@ -1,3 +1,13 @@
+SecurePay
+--------------------------------
+
+SecurePay is a Money Transfer Web Application. 
+
+Tech Stack Used:
+React + Relay + GraphQL + MongoDB + Stripe 
+
+IDE used: VSCode
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

@@ -5,6 +5,7 @@ import {commitMutation, graphql} from "react-relay";
 import environment from "../../environment";
 
 
+const sgMail = require('@sendgrid/mail');
 const SignupMutation = graphql`
     mutation signupMutation($fname: String, $lname: String, $ssn: String, $email: String,$username: String, $password: String){
         createUser(fname: $fname, lname: $lname, ssn: $ssn, email: $email,username: $username , password: $password){
@@ -75,10 +76,11 @@ class Signup extends React.Component{
              errors.passerror="Nice try, password cannot be empty!";
          }
          if(!(this.state.password).match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)){
-             isError=true;
-             errors.passerror="Nice try, password cannot be empty!";
+           isError=true;
+         errors.passerror="Try a STRONGER password!";
 
-         }
+
+       }
          if(!(this.state.fname)){
              isError=true;
              errors.fnameerror="First Name cannot be empty!";
@@ -99,13 +101,16 @@ class Signup extends React.Component{
             ...this.state,
             ...errors
           });
-      
+
           return isError;
 
 
     }
+
+    
     submit(){
         const err = this.validate();
+
 
 
         const variables = {
@@ -116,6 +121,7 @@ class Signup extends React.Component{
             email: this.state.email
         }
         if(!err){
+
         commitMutation(environment,{
             mutation: SignupMutation,
             variables,
@@ -151,7 +157,7 @@ class Signup extends React.Component{
                             <div className="err">{this.state.lnameerror}</div>
 
                     </div>
-                    
+
                 <div className="form-label-group">
                     <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus  value={this.state.email} onChange={this.onusernameChange}/>
                     <label htmlFor="inputEmail">Email address</label>
