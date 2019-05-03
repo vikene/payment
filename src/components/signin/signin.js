@@ -3,9 +3,6 @@ import Navigation from "../navigation";
 import "./signin.css";
 import {commitMutation, graphql} from "react-relay";
 import environment from "../../environment";
-import { AwesomeButton } from "react-awesome-button";
-import "react-awesome-button/dist/styles.css";
-
 
 const SignInMutation = graphql`
     mutation signinMutation($username: String, $password: String){
@@ -58,10 +55,15 @@ export default class Signin extends React.Component{
              isError=true;
              errors.passError="Nice try, password cannot be empty!"
          }
-         if(!(this.state.password).match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)){
+         if(!(this.state.password).match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$&]).*$/)){
 
              isError=true;
              errors.passError="Try again!!";
+       }
+       if(this.state.password.length<10){
+         isError=true;
+       errors.passError="Try again!!";
+
        }
 
           this.setState({

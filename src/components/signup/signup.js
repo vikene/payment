@@ -4,8 +4,6 @@ import "../signin/signin.css";
 import {commitMutation, graphql} from "react-relay";
 import environment from "../../environment";
 
-
-const sgMail = require('@sendgrid/mail');
 const SignupMutation = graphql`
     mutation signupMutation($fname: String, $lname: String, $ssn: String, $email: String,$username: String, $password: String){
         createUser(fname: $fname, lname: $lname, ssn: $ssn, email: $email,username: $username , password: $password){
@@ -75,15 +73,27 @@ class Signup extends React.Component{
              isError=true;
              errors.passerror="Nice try, password cannot be empty!";
          }
-         if(!(this.state.password).match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)){
+         if(!(this.state.password).match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$&]).*$/)){
            isError=true;
          errors.passerror="Try a STRONGER password!";
 
+       }
+       if(this.state.password.length<10){
+         isError=true;
+       errors.passerror="Try a LONGER and STRONGER password!";
 
        }
          if(!(this.state.fname)){
              isError=true;
              errors.fnameerror="First Name cannot be empty!";
+         }
+         if(this.state.fname.length<2){
+             isError=true;
+             errors.fnameerror="First Name should atleast be 2 characters long!";
+         }
+         if(this.state.lname.length<2){
+             isError=true;
+             errors.lnameerror="Last Name should atleast be 2 characters long!";
          }
          if(!(this.state.lname)){
             isError=true;
@@ -107,12 +117,9 @@ class Signup extends React.Component{
 
     }
 
-    
+
     submit(){
         const err = this.validate();
-
-
-
         const variables = {
             username: this.state.username,
             password: this.state.password,
